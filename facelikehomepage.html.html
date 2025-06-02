@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Facebook Lite - Prototype</title>
+<style>
+  /* Reset & base */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #e9ebee;
+    color: #1c1e21;
+    line-height: 1.5;
+  }
+  a {
+    color: #1877f2;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+
+  /* Layout */
+  header {
+    background-color: #1877f2;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  header .logo {
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: -1px;
+    cursor: default;
+  }
+  header nav {
+    margin-left: 30px;
+    display: flex;
+    gap: 18px;
+  }
+  header nav a {
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background-color: #2d66f7;
+    transition: background-color 0.3s;
+  }
+  header nav a:hover {
+    background-color: #385dcf;
+  }
+
+  .container {
+    display: flex;
+    max-width: 1100px;
+    margin: 20px auto;
+    gap: 20px;
+    padding: 0 10px;
+  }
+
+  /* Left Sidebar */
+  .sidebar-left {
+    flex: 0 0 280px;
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    height: fit-content;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
+  }
+  .profile-summary {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .profile-summary img {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .profile-summary .name {
+    font-weight: 700;
+    font-size: 18px;
+  }
+  nav.sidebar-nav {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  nav.sidebar-nav a {
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    color: #050505;
+    background-color: #f5f6f7;
+    transition: background-color 0.25s;
+    display: block;
+  }
+  nav.sidebar-nav a:hover {
+    background-color: #e4e6eb;
+  }
+
+  /* Main Feed */
+  .feed {
+    flex: 1 1 auto;
+  }
+  .status-box {
+    background: white;
+    border-radius: 8px;
+    padding: 14px 18px 14px 18px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
+  }
+  .status-box textarea {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #ccd0d5;
+    resize: none;
+    padding: 10px 15px;
+    font-size: 15px;
+    font-family: inherit;
+    min-height: 60px;
+    transition: border-color 0.25s;
+  }
+  .status-box textarea:focus {
+    outline: none;
+    border-color: #1877f2;
+  }
+  .status-box button {
+    margin-top: 10px;
+    background-color: #1877f2;
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    float: right;
+    box-shadow: 0 2px 6px rgb(24 119 242 / 0.75);
+    transition: background-color 0.3s ease;
+  }
+  .status-box button:disabled {
+    background-color: #a3c0f7;
+    cursor: default;
+    box-shadow: none;
+  }
+  .status-box button:hover:not(:disabled) {
+    background-color: #145dbf;
+  }
+
+  .posts {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .post {
+    background: white;
+    border-radius: 8px;
+    padding: 14px 18px;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
+  }
+  .post-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .post-header img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .post-header .username {
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .post-content {
+    font-size: 15px;
+    white-space: pre-wrap;
+    margin-bottom: 10px;
+  }
+  .post-actions {
+    display: flex;
+    gap: 16px;
+  }
+  .post-actions button {
+    background: none;
+    border: none;
+    color: #65676b;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.25s;
+    font-size: 14px;
+  }
+  .post-actions button.liked {
+    color: #1877f2;
+  }
+  .post-actions button:hover {
+    color: #1877f2;
+  }
+  .post-actions svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+
+  /* Right Sidebar */
+  .sidebar-right {
+    flex: 0 0 280px;
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    height: fit-content;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
+  }
+  .sidebar-right h3 {
+    font-weight: 700;
+    margin-bottom: 14px;
+    font-size: 18px;
+    border-bottom: 1px solid #dddfe2;
+    padding-bottom: 6px;
+  }
+  .friend-suggestion {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .friend-suggestion img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .friend-suggestion .name {
+    font-weight: 600;
+    flex: 1;
+  }
+  .friend-suggestion button {
+    background-color: #1877f2;
+    border: none;
+    color: white;
+    font-weight: 600;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .friend-suggestion button:hover {
+    background-color: #145dbf;
+  }
+
+  /* Responsive */
+  @media (max-width: 980px) {
+    .container {
+      flex-direction: column;
+      max-width: 100%;
+      margin: 10px auto;
+      padding: 0 10px;
+    }
+    .sidebar-left, .sidebar-right {
+      flex: none;
+      width: 100%;
+      margin-bottom: 16px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo" tabindex="0" aria-label="Facebook Logo">facebook</div>
+  <nav aria-label="Main navigation">
+    <a href="#home" tabindex="0">Home</a>
+    <a href="#profile" tabindex="0">Profile</a>
+    <a href="#friends" tabindex="0">Friends</a>
+    <a href="#messages" tabindex="0">Messages</a>
+    <a href="#notifications" tabindex="0">Notifications</a>
+  </nav>
+</header>
+
+<div class="container">
+
+  <aside class="sidebar-left" aria-label="User profile and navigation">
+    <div class="profile-summary" tabindex="0">
+      <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="User Profile Picture" />
+      <div class="name">John Doe</div>
+    </div>
+    <nav class="sidebar-nav" aria-label="Sidebar navigation">
+      <a href="#newsfeed" tabindex="0">News Feed</a>
+      <a href="#events" tabindex="0">Events</a>
+      <a href="#groups" tabindex="0">Groups</a>
+      <a href="#marketplace" tabindex="0">Marketplace</a>
+    </nav>
+  </aside>
+
+  <main class="feed" role="main" aria-label="Main news feed">
+    <section class="status-box" aria-label="Create a new post">
+      <textarea id="postInput" aria-placeholder="What's on your mind, John?" rows="3" maxlength="280"></textarea>
+      <button id="postButton" disabled>Post</button>
+    </section>
+
+    <section class="posts" id="posts" aria-live="polite" aria-label="Posts feed">
+      <!-- Posts will appear here dynamically -->
+    </section>
+  </main>
+
+  <aside class="sidebar-right" aria-label="Friend suggestions">
+    <h3>People You May Know</h3>
+    <div class="friend-suggestion" tabindex="0">
+      <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Friend 1" />
+      <div class="name">Emily Clark</div>
+      <button type="button" aria-label="Add Emily Clark as friend">Add Friend</button>
+    </div>
+    <div class="friend-suggestion" tabindex="0">
+      <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Friend 2" />
+      <div class="name">Michael Smith</div>
+      <button type="button" aria-label="Add Michael Smith as friend">Add Friend</button>
+    </div>
+    <div class="friend-suggestion" tabindex="0">
+      <img src="https://randomuser.me/api/portraits/women/24.jpg" alt="Friend 3" />
+      <div class="name">Lisa Roberts</div>
+      <button type="button" aria-label="Add Lisa Roberts as friend">Add Friend</button>
+    </div>
+  </aside>
+
+</div>
+
+<script>
+(() => {
+  const postInput = document.getElementById('postInput');
+  const postButton = document.getElementById('postButton');
+  const postsContainer = document.getElementById('posts');
+
+  // Enable/disable post button based on text input
+  postInput.addEventListener('input', () => {
+    postButton.disabled = postInput.value.trim().length === 0;
+  });
+
+  // Like icon SVG
+  const likeIconSvg = `
+  <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+  </svg>`;
+
+  // Create a new post element
+  function createPostElement(text, username = 'John Doe', userImg = 'https://randomuser.me/api/portraits/men/45.jpg') {
+    const postElem = document.createElement('article');
+    postElem.className = 'post';
+
+    postElem.innerHTML = `
+      <header class="post-header">
+        <img src="${userImg}" alt="${username} profile picture" />
+        <div class="username">${username}</div>
+      </header>
+      <div class="post-content">${escapeHtml(text)}</div>
+      <div class="post-actions">
+        <button aria-label="Like post" title="Like post">
+          ${likeIconSvg}
+          <span>Like</span>
+        </button>
+      </div>
+    `;
+
+    const likeButton = postElem.querySelector('button');
+    likeButton.addEventListener('click', () => {
+      likeButton.classList.toggle('liked');
+      likeButton.querySelector('span').textContent = likeButton.classList.contains('liked') ? 'Liked' : 'Like';
+    });
+
+    return postElem;
+  }
+
+  // Escape HTML to prevent XSS
+  function escapeHtml(string) {
+    const div = document.createElement('div');
+    div.appendChild(document.createTextNode(string));
+    return div.innerHTML;
+  }
+
+  // Add new post on button click or Ctrl+Enter
+  function addPost() {
+    const text = postInput.value.trim();
+    if (!text) return;
+
+    const newPost = createPostElement(text);
+    postsContainer.prepend(newPost);
+    postInput.value = '';
+    postButton.disabled = true;
+  }
+
+  postButton.addEventListener('click', addPost);
+
+  postInput.addEventListener('keydown', e => {
+    if ((e.key === 'Enter' || e.keyCode === 13) && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+      addPost();
+    }
+  });
+
+  // Initial sample posts
+  const initialPosts = [
+    "Hello world! Welcome to my Facebook Lite prototype.",
+    "Enjoying the sunny day outside. ☀️",
+    "Just finished reading a great book. Highly recommend it!",
+  ];
+
+  initialPosts.forEach(text => {
+    const post = createPostElement(text);
+    postsContainer.appendChild(post);
+  });
+})();
+</script>
+
+</body>
+</html>
+

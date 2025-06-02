@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to use Grid</title>
+    <style>
+        * {
+            margin: 0%;
+            padding: 0%;
+        }
+
+        body {
+            background-color: rgb(236, 157, 9);
+            
+                @media screen and (max-width:800px) {
+                body {
+                    background-color: blue;
+                }
+            } 
+
+            @media screen and (max-width:600px) {
+                body {
+                    background-color: black;
+                }
+            }
+
+            @media screen and (max-width:500px) {
+                body {
+                    background-color: red;
+                }
+            }
+
+            @media screen and (max-width:444px) {
+                body {
+                    background-color: aqua;
+                }
+            }
+        
+            }
+
+           
+    
+
+        ul {
+            display: inline-grid;
+            grid-template-columns: auto auto;
+            margin: 0;
+            padding: 20px;
+        }
+
+        ul li {
+            list-style: none;
+            margin: 0 20px;
+        }
+
+        header {
+            background-color: blue;
+            color: azure;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li>Home</li>
+                <li>About</li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi, maxime obcaecati. Ducimus amet architecto
+        obcaecati consequuntur voluptatem neque itaque veritatis adipisci pariatur cupiditate id aliquid, incidunt
+        reiciendis dolorum et iure nulla quia minus debitis illo. Nemo esse nam eligendi quas excepturi repellendus
+        voluptate autem?
+    </div>
+</body>
+
+</html>

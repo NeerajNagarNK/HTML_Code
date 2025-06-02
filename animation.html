@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: cyan;
+        }
+
+        .circle {
+            background-color: yellow;
+            width: 98vw;
+            height: 5px;
+            display: flexbox;
+            animation: load 1s ease-in-out 5;
+        }
+
+        header {
+            background-color: green;
+            width: 110vw;
+            height: 70px;
+            color: navy;
+            font-size: large;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: xx-large;
+
+        }
+        @keyframes load {
+
+            0%{
+                width:0;
+            }
+            /*40%{
+                width:50vw;
+            }*/
+            60%{
+                width: 80vw;
+            }
+            100%{
+                width: 100vw;
+            }
+        }
+        .wheel{
+            float: center;
+            align-items: center;
+            height: 20px;
+            width: 20px;
+        }
+        @keyframes rotate {
+            0%{
+                transform: rotate(180deg);
+            }
+            100%{
+                transform: rotate(360deg);
+            }
+        }
+        .wheel{
+                animation: rotate 1s ease-in infinite ;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="circle"> hi</div>
+    <header> This is MY Header section</header>
+    <div class="wheel">
+        height is not a metter
+    </div>
+
+
+</body>
+
+</html>

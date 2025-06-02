@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Position</title>
+    <style>
+        .navbar{
+            background-color: black;
+            color: antiquewhite;
+            height: 9vh;
+            text-align: center;
+            text-decoration: none;
+        }
+         p{
+            text-align: center;
+            border: 3px solid green;
+        }
+        .container{
+            background-color: yellow;
+            width: 150vh;
+            height: 50vw;
+            margin: auto;
+            position: fixed;
+           
+        }
+        
+       
+        .box1{
+            text-align: center;
+            height: 150px;
+            width: 150px;
+            background-color: tomato;
+            position: sticky;
+            bottom: 33px
+           
+
+        }
+        .box2{
+            text-align: center;
+            height: 180px;
+            width: 150px;
+            background-color: rgb(99, 71, 255);
+            position: fixed;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar"> 
+        <ul>
+            <li>
+                Home 
+                Insert
+                Open
+                Save
+                Exit
+            </li>
+        </ul>
+
+    </nav>
+    <div class="container">
+        <p>
+            Lorem 1ipsum dolor sit amet consectetur adipisicing elit. Illum labore consectetur sed voluptatum provident animi incidunt repudiandae mollitia hic ab unde, dolore, eos maiores. Sit modi impedit alias nam aliquid?
+        </p>
+        <div class="box1">
+           
+                Box1  </div>
+           
+            <div class="box2">
+              
+                    Box2
+               
+            </div>
+       
+
+    </div>
+</body>
+</html>
